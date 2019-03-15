@@ -1,12 +1,9 @@
-package com.decathlon.ecolededev.service;
+package com.decathlon.ecolededev.booking;
 
-import com.decathlon.ecolededev.pojo.Booking;
-import com.decathlon.ecolededev.repository.BookingRepository;
-import com.decathlon.ecolededev.repository.ClientRepository;
-import com.decathlon.ecolededev.repository.SportHallRespository;
-import com.decathlon.ecolededev.repository.model.BookingModel;
-import com.decathlon.ecolededev.repository.model.ClientModel;
-import com.decathlon.ecolededev.repository.model.SportHallModel;
+import com.decathlon.ecolededev.client.ClientRepository;
+import com.decathlon.ecolededev.SportHall.SportHallRespository;
+import com.decathlon.ecolededev.client.ClientModel;
+import com.decathlon.ecolededev.SportHall.SportHallModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

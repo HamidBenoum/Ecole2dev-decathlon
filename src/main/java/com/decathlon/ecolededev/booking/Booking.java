@@ -1,4 +1,4 @@
-package com.decathlon.ecolededev.pojo;
+package com.decathlon.ecolededev.booking;
 
 import lombok.Builder;
 import lombok.Data;

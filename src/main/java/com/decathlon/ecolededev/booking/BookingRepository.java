@@ -1,6 +1,5 @@
-package com.decathlon.ecolededev.repository;
+package com.decathlon.ecolededev.booking;
 
-import com.decathlon.ecolededev.repository.model.BookingModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

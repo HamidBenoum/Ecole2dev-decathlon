@@ -1,6 +1,5 @@
-package com.decathlon.ecolededev.repository;
+package com.decathlon.ecolededev.SportHall;
 
-import com.decathlon.ecolededev.repository.model.AdresseModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

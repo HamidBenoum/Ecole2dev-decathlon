@@ -1,9 +1,12 @@
-package com.decathlon.ecolededev.service;
+package com.decathlon.ecolededev.client;
 
-import com.decathlon.ecolededev.pojo.Client;
-import com.decathlon.ecolededev.repository.ClientRepository;
-import com.decathlon.ecolededev.repository.model.ClientModel;
+import com.decathlon.ecolededev.client.Client;
+import com.decathlon.ecolededev.client.ClientRepository;
+import com.decathlon.ecolededev.client.ClientModel;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ClientService {
@@ -17,6 +20,17 @@ public class ClientService {
     public Client create(Client client){
         ClientModel clientModel = clientRepository.saveAndFlush(mapClientToClientModel(client));
         return mapClientModelToClient(clientModel);
+    }
+
+    public Client getOne(Long id){
+        return mapClientModelToClient(clientRepository.getOne(id));
+    }
+
+    public List<Client> getAll(){
+        return clientRepository.findAll()
+                .stream()
+                .map(clientModel -> mapClientModelToClient(clientModel))
+                .collect(Collectors.toList());
     }
 
     private ClientModel mapClientToClientModel(Client client){

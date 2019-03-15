@@ -1,8 +1,6 @@
-package com.decathlon.ecolededev.controller;
+package com.decathlon.ecolededev.booking;
 
 
-import com.decathlon.ecolededev.pojo.Booking;
-import com.decathlon.ecolededev.service.BookingService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,4 +30,5 @@ public class BookingController {
     public Booking getBooking(@PathVariable Long id){
         return bookingService.getOne(id);
     }
+
 }

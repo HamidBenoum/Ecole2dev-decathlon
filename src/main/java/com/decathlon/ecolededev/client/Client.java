@@ -1,4 +1,4 @@
-package com.decathlon.ecolededev.pojo;
+package com.decathlon.ecolededev.client;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

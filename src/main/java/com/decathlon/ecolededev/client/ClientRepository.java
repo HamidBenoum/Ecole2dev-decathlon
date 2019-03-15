@@ -1,6 +1,6 @@
-package com.decathlon.ecolededev.repository;
+package com.decathlon.ecolededev.client;
 
-import com.decathlon.ecolededev.repository.model.ClientModel;
+import com.decathlon.ecolededev.client.ClientModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

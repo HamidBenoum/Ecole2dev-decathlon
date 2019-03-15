@@ -1,5 +1,7 @@
-package com.decathlon.ecolededev.repository.model;
+package com.decathlon.ecolededev.booking;
 
+import com.decathlon.ecolededev.client.ClientModel;
+import com.decathlon.ecolededev.SportHall.SportHallModel;
 import lombok.*;
 
 import javax.persistence.*;

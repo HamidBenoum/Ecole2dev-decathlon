@@ -1,9 +1,9 @@
-package com.decathlon.ecolededev.repository.model;
+package com.decathlon.ecolededev.client;
 
+import com.decathlon.ecolededev.SportHall.AdresseModel;
 import lombok.*;
 
 import javax.persistence.*;
-
 
 @Builder
 @Data
@@ -11,16 +11,16 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "sporthall")
-public class SportHallModel {
+@Table(name = "client")
+public class ClientModel {
 
     @Id
     @GeneratedValue
     private Long id;
 
+    private String name;
+
     @OneToOne
     private AdresseModel adresseModel;
-
-    private String name;
 
 }

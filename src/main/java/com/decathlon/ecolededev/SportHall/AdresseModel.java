@@ -1,4 +1,4 @@
-package com.decathlon.ecolededev.repository.model;
+package com.decathlon.ecolededev.SportHall;
 
 import lombok.*;
 
