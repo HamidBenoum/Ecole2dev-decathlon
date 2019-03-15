@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/client/")
 public class ClientController {
 
     private ClientService clientService;
@@ -13,17 +14,17 @@ public class ClientController {
         this.clientService=clientService;
     }
 
-    @PostMapping("/client/")
+    @PostMapping
     public Client create(@RequestBody Client client){
         return clientService.create(client);
     }
 
-    @GetMapping("/client/{id}")
+    @GetMapping("{id}")
     public Client getById(@PathVariable Long id){
         return clientService.getOne(id);
     }
 
-    @GetMapping("/client/")
+    @GetMapping
     public List<Client> getClients(){
         return clientService.getAll();
     }

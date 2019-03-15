@@ -1,36 +1,38 @@
 package com.decathlon.ecolededev.SportHall;
 
 import com.decathlon.ecolededev.httpstatus.NotFoundException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@PreAuthorize("hasRole('ADMIN')")
 @RestController
+@RequestMapping("/sporthall/")
 public class SportHallController {
 
     private SportHallService sportHallService;
-
 
     public SportHallController(SportHallService sportHallService) {
         this.sportHallService = sportHallService;
     }
 
-    @PostMapping("/sporthall/")
+    @PostMapping
     public SportHall createSportHall(@RequestBody SportHall sportHall) {
         return sportHallService.create(sportHall);
     }
 
-    @GetMapping("/sporthall/")
+    @GetMapping
     public List<SportHall> getAll() {
 
         return sportHallService.getAll();
     }
 
-    @GetMapping("/sporthall/{id}")
+    @GetMapping("{id}")
     public SportHall getById(@PathVariable Long id) throws NotFoundException {
 
         return sportHallService.getOne(id)
-                .orElseThrow(NotFoundException::new);
+                .orElseThrow(()->new NotFoundException("No sport hall for id "+id));
 
     }
 
