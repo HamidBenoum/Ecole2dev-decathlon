@@ -19,7 +19,4 @@ public class ClientModel {
 
     private String name;
 
-    @OneToOne
-    private AdresseModel adresseModel;
-
 }

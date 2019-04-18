@@ -40,7 +40,7 @@ public class BookingService {
         }
 
         //on recupere la liste des slots dont la date est supérieur à celle de départ
-        List<BookingModel> byStartingDate = bookingRepository.findByStartingDate(booking.getStart(),booking.getIdSportHall());
+        List<BookingModel> byStartingDate = bookingRepository.findByStartingDate(booking.getStart(), booking.getIdSportHall());
 
         //on verifie si on a un conflict
         if (!slotService.isAvailable(getSlotsFromBookings(byStartingDate), slot)) {
@@ -57,7 +57,37 @@ public class BookingService {
         return mapBookingModelToBooking(model);
     }
 
-    public Booking cancelBooking(Long id){
+    public Booking addBookingForMaintenance(Long idSportHall, Slot slot) throws IncorrectSlotException {
+        //on verifie si le slot est correcte
+        if (!slotService.isCorrectSlot(slot)) {
+            throw new IncorrectSlotException(slot);
+        }
+
+        Booking booking = Booking.builder()
+                .idSportHall(idSportHall)
+                .start(slot.getStart())
+                .end(slot.getEnd())
+                .status(BookingModel.Status.MAINTENANCE)
+                .build();
+
+        BookingModel bookingModel = mapBookingToBookingModel(booking);
+
+        //on recupére la liste des reservations sur ce créneau pour les cancels
+        //on recupere la liste des slots dont la date est supérieur à celle de départ
+        List<BookingModel> betweenStartAndEndDate = bookingRepository.findBetweenStartAndEndDate(booking.getStart(),
+                booking.getEnd(), booking.getIdSportHall());
+
+        for (BookingModel current : betweenStartAndEndDate) {
+            current.setStatus(BookingModel.Status.CANCELED);
+            bookingRepository.save(current);
+        }
+
+        //on sauvegarde
+        bookingRepository.save(bookingModel);
+        return mapBookingModelToBooking(bookingModel);
+    }
+
+    public Booking cancelBooking(Long id) {
         BookingModel one = bookingRepository.getOne(id);
         one.setStatus(BookingModel.Status.CANCELED);
         bookingRepository.save(one);
@@ -75,14 +105,14 @@ public class BookingService {
                 .collect(Collectors.toList());
     }
 
-    public List<Booking> getByStatus(BookingModel.Status status){
+    public List<Booking> getByStatus(BookingModel.Status status) {
         return bookingRepository.findByStatus(status)
                 .stream()
                 .map(b -> mapBookingModelToBooking(b))
                 .collect(Collectors.toList());
     }
 
-    public Booking validateBooking(Long id){
+    public Booking validateBooking(Long id) {
         BookingModel one = bookingRepository.getOne(id);
         one.setStatus(BookingModel.Status.VALIDATE);
         bookingRepository.save(one);
@@ -95,14 +125,20 @@ public class BookingService {
                 .id(bookingModel.getId())
                 .end(bookingModel.getEnd())
                 .start(bookingModel.getStart())
-                .idClient(bookingModel.getClientModel().getId())
+                .idClient(bookingModel.getClientModel() != null ? bookingModel.getClientModel().getId() : null)
                 .idSportHall(bookingModel.getSportHallModel().getId())
                 .status(bookingModel.getStatus())
                 .build();
     }
 
     private BookingModel mapBookingToBookingModel(Booking booking) {
-        ClientModel client = clientRepository.getOne(booking.getIdClient());
+
+        ClientModel client = null;
+        if (booking.getIdClient() != null) {
+            client = clientRepository.getOne(booking.getIdClient());
+        }
+
+
         SportHallModel sportHall = sportHallRespository.getOne(booking.getIdSportHall());
 
         return BookingModel.builder()

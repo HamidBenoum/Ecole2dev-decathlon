@@ -38,7 +38,8 @@ public class BookingModel {
         WAITING,
         VALIDATE,
         CONFLICT,
-        CANCELED
+        CANCELED,
+        MAINTENANCE
     }
 
 }
