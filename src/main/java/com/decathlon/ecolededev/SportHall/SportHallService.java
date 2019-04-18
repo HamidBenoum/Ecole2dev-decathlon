@@ -1,12 +1,9 @@
 package com.decathlon.ecolededev.SportHall;
 
-import com.decathlon.ecolededev.booking.BookingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -36,14 +33,9 @@ public class SportHallService {
     }
 
 
-    public Optional<SportHall> getOne(Long id) {
-        try {
-            return Optional.of(sportHallRespository.getOne(id))
-                    .map(m -> mapSportHallModelToSportHall(m));
-        } catch (EntityNotFoundException e) {
-            log.info("SportHall not found for the id {id}", id);
-            return Optional.empty();
-        }
+    public SportHall getOne(Long id) {
+        SportHallModel one = sportHallRespository.getOne(id);
+        return mapSportHallModelToSportHall(one);
     }
 
     private SportHallModel mapSportHallToSportHallModel(SportHall sportHall) {

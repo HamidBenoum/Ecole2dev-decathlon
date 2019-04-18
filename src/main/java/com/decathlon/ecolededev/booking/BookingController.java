@@ -1,8 +1,5 @@
 package com.decathlon.ecolededev.booking;
 
-
-import com.decathlon.ecolededev.exceptions.IncorrectSlotException;
-import com.decathlon.ecolededev.exceptions.NotAvailableSlotException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +16,7 @@ public class BookingController {
     }
 
     @PostMapping
-    public Booking add(@RequestBody Booking booking) throws IncorrectSlotException, NotAvailableSlotException {
+    public Booking add(@RequestBody Booking booking) {
         return bookingService.addBooking(booking);
     }
 

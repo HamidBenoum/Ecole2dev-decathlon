@@ -1,6 +1,5 @@
 package com.decathlon.ecolededev.SportHall;
 
-import com.decathlon.ecolededev.httpstatus.NotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,9 +29,8 @@ public class SportHallController {
     }
 
     @GetMapping("{id}")
-    public SportHall getById(@PathVariable Long id) throws NotFoundException {
+    public SportHall getById(@PathVariable Long id){
 
-        return sportHallService.getOne(id)
-                .orElseThrow(() -> new NotFoundException("No sport hall for id " + id));
+        return sportHallService.getOne(id);
     }
 }
