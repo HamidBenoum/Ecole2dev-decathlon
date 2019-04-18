@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@PreAuthorize("hasRole('ADMIN')")
+
 @RestController
 @RequestMapping("/sporthall/")
 public class SportHallController {
@@ -17,6 +17,7 @@ public class SportHallController {
         this.sportHallService = sportHallService;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public SportHall createSportHall(@RequestBody SportHall sportHall) {
         return sportHallService.create(sportHall);
@@ -32,7 +33,7 @@ public class SportHallController {
     public SportHall getById(@PathVariable Long id) throws NotFoundException {
 
         return sportHallService.getOne(id)
-                .orElseThrow(()->new NotFoundException("No sport hall for id "+id));
+                .orElseThrow(() -> new NotFoundException("No sport hall for id " + id));
 
     }
 

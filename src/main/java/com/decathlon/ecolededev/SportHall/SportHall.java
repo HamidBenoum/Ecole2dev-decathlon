@@ -10,4 +10,5 @@ public class SportHall {
     private Long id;
     private String adresse;
     private String name;
+    private Integer price;
 }

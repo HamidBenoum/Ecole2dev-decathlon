@@ -1,8 +1,5 @@
 package com.decathlon.ecolededev.client;
 
-import com.decathlon.ecolededev.client.Client;
-import com.decathlon.ecolededev.client.ClientRepository;
-import com.decathlon.ecolededev.client.ClientModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,34 +10,46 @@ public class ClientService {
 
     private ClientRepository clientRepository;
 
-    public ClientService(ClientRepository clientRepository){
-        this.clientRepository=clientRepository;
+    public ClientService(ClientRepository clientRepository) {
+        this.clientRepository = clientRepository;
     }
 
-    public Client create(Client client){
+    public Client create(Client client) {
         ClientModel clientModel = clientRepository.saveAndFlush(mapClientToClientModel(client));
         return mapClientModelToClient(clientModel);
     }
 
-    public Client getOne(Long id){
+    public Client getOne(Long id) {
         return mapClientModelToClient(clientRepository.getOne(id));
     }
 
-    public List<Client> getAll(){
+    public List<Client> getAll() {
         return clientRepository.findAll()
                 .stream()
                 .map(clientModel -> mapClientModelToClient(clientModel))
                 .collect(Collectors.toList());
     }
 
-    private ClientModel mapClientToClientModel(Client client){
+    public void delete(Long id){
+        clientRepository.deleteById(id);
+    }
+
+    public Client update(Client client){
+        ClientModel clientModel = clientRepository.getOne(client.getId());
+        clientModel.setName(client.getName());
+        ClientModel save = clientRepository.save(clientModel);
+        return mapClientModelToClient(save);
+    }
+
+
+    private ClientModel mapClientToClientModel(Client client) {
 
         return ClientModel.builder()
                 .name(client.getName())
                 .build();
     }
 
-    private Client mapClientModelToClient(ClientModel clientModel){
+    private Client mapClientModelToClient(ClientModel clientModel) {
         return Client.builder()
                 .name(clientModel.getName())
                 .id(clientModel.getId())
