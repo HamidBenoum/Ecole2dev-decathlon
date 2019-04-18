@@ -7,7 +7,6 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.persistence.EntityNotFoundException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,30 +16,24 @@ import java.util.stream.Collectors;
 public class SportHallService {
 
     private SportHallRespository sportHallRespository;
-    private AdresseRepository adresseRepository;
 
-    public SportHallService(SportHallRespository sportHallRespository, AdresseRepository adresseRepository) {
+    public SportHallService(SportHallRespository sportHallRespository) {
         this.sportHallRespository = sportHallRespository;
-        this.adresseRepository = adresseRepository;
     }
 
     public SportHall create(SportHall sportHall) {
 
-        AdresseModel adresse = AdresseModel.builder().adresse(sportHall.getAdresse()).build();
-
-        AdresseModel adresseModel = adresseRepository.saveAndFlush(adresse);
-
-        SportHallModel sportHallModel = mapSportHallToSportHallModel(sportHall, adresseModel);
+        SportHallModel sportHallModel = mapSportHallToSportHallModel(sportHall);
 
         sportHallModel = sportHallRespository.save(sportHallModel);
 
-        return mapSportHallModelToSportHall(sportHallModel, adresseModel);
+        return mapSportHallModelToSportHall(sportHallModel);
     }
 
     public List<SportHall> getAll() {
         return sportHallRespository.findAll()
                 .stream()
-                .map(model -> mapSportHallModelToSportHall(model, model.getAdresseModel()))
+                .map(model -> mapSportHallModelToSportHall(model))
                 .map(sportHall -> {
                     sportHall.setPrice(getPrice(sportHall.getId()));
                     return sportHall;
@@ -52,7 +45,7 @@ public class SportHallService {
     public Optional<SportHall> getOne(Long id) {
         try {
             return Optional.of(sportHallRespository.getOne(id))
-                    .map(m -> mapSportHallModelToSportHall(m, m.getAdresseModel()));
+                    .map(m -> mapSportHallModelToSportHall(m));
         } catch (EntityNotFoundException e) {
             log.info("SportHall not found for the id {id}", id);
             return Optional.empty();
@@ -72,18 +65,20 @@ public class SportHallService {
         return response.getBody();
     }
 
-    private SportHallModel mapSportHallToSportHallModel(SportHall sportHall, AdresseModel adresseModel) {
+    private SportHallModel mapSportHallToSportHallModel(SportHall sportHall) {
         return SportHallModel.builder()
-                .adresseModel(adresseModel)
                 .name(sportHall.getName())
+                .description(sportHall.getDescription())
+                .telephoneNumber(sportHall.getTelephoneNumber())
                 .build();
     }
 
-    private SportHall mapSportHallModelToSportHall(SportHallModel sportHallModel, AdresseModel adresseModel) {
+    private SportHall mapSportHallModelToSportHall(SportHallModel sportHallModel) {
         return SportHall.builder()
-                .adresse(adresseModel.getAdresse())
                 .id(sportHallModel.getId())
                 .name(sportHallModel.getName())
+                .description(sportHallModel.getDescription())
+                .telephoneNumber(sportHallModel.getTelephoneNumber())
                 .build();
     }
 

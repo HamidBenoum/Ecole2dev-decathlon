@@ -1,8 +1,11 @@
 package com.decathlon.ecolededev.slot;
 
+import org.springframework.stereotype.Component;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Component
 public class SlotServiceImpl implements SlotService {
 
     @Override
@@ -15,12 +18,11 @@ public class SlotServiceImpl implements SlotService {
             //OU
             //si le slot commence avant le début du slot courant ET fini après la fin du slot courant
             if (slot.getStart().isAfter(s.getStart()) && slot.getStart().isBefore(s.getEnd())
-                    || slot.getEnd().isAfter(s.getStart()) && slot.getEnd().isAfter(s.getEnd())
-                    || slot.getStart().isBefore(s.getEnd()) && slot.getEnd().isAfter(s.getEnd())) {
+                    || slot.getEnd().isAfter(s.getStart()) && slot.getEnd().isBefore(s.getEnd())
+                    || slot.getStart().isBefore(s.getEnd()) && slot.getEnd().isAfter(s.getEnd())
+            || slot.getStart().isEqual(s.getStart()) && slot.getEnd().isEqual(s.getEnd())) {
                 return false;
             }
-
-
         }
         return true;
     }
@@ -30,15 +32,6 @@ public class SlotServiceImpl implements SlotService {
         return null;
     }
 
-    @Override
-    public List<Slot> add(List<Slot> slotList, Slot slot) {
-        return null;
-    }
-
-    @Override
-    public List<Slot> remove(List<Slot> slotList, Slot slot) {
-        return null;
-    }
 
     @Override
     public boolean isCorrectSlot(Slot slot) {

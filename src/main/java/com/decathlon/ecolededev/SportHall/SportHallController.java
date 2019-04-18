@@ -8,7 +8,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/sporthall/")
+@RequestMapping("/sporthalls/")
 public class SportHallController {
 
     private SportHallService sportHallService;

@@ -34,20 +34,6 @@ public interface SlotService {
      */
     List<Slot> conflictingSlot(List<Slot> slotList);
 
-
-    /**
-     * This method add a slot on the list
-     *
-     * @param slot
-     * @return
-     */
-    List<Slot> add(List<Slot> slotList, Slot slot);
-
-    /**
-     * This method remove a selected slot from the list
-     */
-    List<Slot> remove(List<Slot> slotList, Slot slot);
-
     /**
      * This method will check if the slot is correct
      * A correct slot have a @Slot.start > @Slot.end

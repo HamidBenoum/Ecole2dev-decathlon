@@ -1,15 +1,12 @@
 package com.decathlon.ecolededev.client;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityNotFoundException;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
-@RequestMapping("/client/")
+@RequestMapping("/clients/")
 public class ClientController {
 
     private ClientService clientService;

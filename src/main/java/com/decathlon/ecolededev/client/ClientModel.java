@@ -1,6 +1,5 @@
 package com.decathlon.ecolededev.client;
 
-import com.decathlon.ecolededev.SportHall.AdresseModel;
 import lombok.*;
 
 import javax.persistence.*;

@@ -18,8 +18,9 @@ public class SportHallModel {
     @GeneratedValue
     private Long id;
 
-    @OneToOne
-    private AdresseModel adresseModel;
+    private String description;
+
+    private String telephoneNumber;
 
     private String name;
 

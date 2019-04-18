@@ -21,10 +21,11 @@ public class BookingService {
     private SportHallRespository sportHallRespository;
     private SlotService slotService;
 
-    public BookingService(BookingRepository bookingRepository, ClientRepository clientRepository, SportHallRespository sportHallRespository) {
+    public BookingService(BookingRepository bookingRepository, ClientRepository clientRepository, SportHallRespository sportHallRespository, SlotService slotService) {
         this.bookingRepository = bookingRepository;
         this.clientRepository = clientRepository;
         this.sportHallRespository = sportHallRespository;
+        this.slotService = slotService;
     }
 
     public Booking addBooking(Booking booking) throws IncorrectSlotException, NotAvailableSlotException {
@@ -39,17 +40,28 @@ public class BookingService {
         }
 
         //on recupere la liste des slots dont la date est supérieur à celle de départ
-        List<BookingModel> byStartingDate = bookingRepository.findByStartingDate(booking.getStart());
+        List<BookingModel> byStartingDate = bookingRepository.findByStartingDate(booking.getStart(),booking.getIdSportHall());
 
         //on verifie si on a un conflict
         if (!slotService.isAvailable(getSlotsFromBookings(byStartingDate), slot)) {
+            bookingModel.setStatus(BookingModel.Status.CONFLICT);
+            bookingRepository.saveAndFlush(bookingModel);
             throw new NotAvailableSlotException(slot);
         }
+
+        bookingModel.setStatus(BookingModel.Status.WAITING);
 
         //tout va bien on sauvegarde
         BookingModel model = bookingRepository.saveAndFlush(bookingModel);
 
         return mapBookingModelToBooking(model);
+    }
+
+    public Booking cancelBooking(Long id){
+        BookingModel one = bookingRepository.getOne(id);
+        one.setStatus(BookingModel.Status.CANCELED);
+        bookingRepository.save(one);
+        return mapBookingModelToBooking(one);
     }
 
     public Booking getOne(Long id) {
@@ -63,6 +75,20 @@ public class BookingService {
                 .collect(Collectors.toList());
     }
 
+    public List<Booking> getByStatus(BookingModel.Status status){
+        return bookingRepository.findByStatus(status)
+                .stream()
+                .map(b -> mapBookingModelToBooking(b))
+                .collect(Collectors.toList());
+    }
+
+    public Booking validateBooking(Long id){
+        BookingModel one = bookingRepository.getOne(id);
+        one.setStatus(BookingModel.Status.VALIDATE);
+        bookingRepository.save(one);
+        return mapBookingModelToBooking(one);
+    }
+
     private Booking mapBookingModelToBooking(BookingModel bookingModel) {
 
         return Booking.builder()
@@ -71,6 +97,7 @@ public class BookingService {
                 .start(bookingModel.getStart())
                 .idClient(bookingModel.getClientModel().getId())
                 .idSportHall(bookingModel.getSportHallModel().getId())
+                .status(bookingModel.getStatus())
                 .build();
     }
 
@@ -83,6 +110,7 @@ public class BookingService {
                 .end(booking.getEnd())
                 .clientModel(client)
                 .sportHallModel(sportHall)
+                .status(booking.getStatus())
                 .build();
     }
 
