@@ -20,7 +20,7 @@ Voici la liste des API à implémenter :
 | DELETE | /sporthalls/{id}    |    Supprime une salle de sport |
 | PATCH | /sporthalls/    |    Met à jour une salle de sport |
 
-Les méthodes POST et PATCH nécéssite de passer dans le body de la request la ressource.
+Les méthodes POST et PATCH nécéssitent de passer dans le body de la request la ressource.
 
 ---
 
