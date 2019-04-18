@@ -28,19 +28,6 @@ public class BookingController {
         return bookingService.getAll();
     }
 
-    @GetMapping("/status/{status}")
-    public List<Booking> getNotValidate(@PathVariable String status) {
-
-        BookingModel.Status value = BookingModel.Status.valueOf(status);
-
-        return bookingService.getByStatus(value);
-    }
-
-    @PatchMapping("{id}/validate")
-    public Booking validateBooking(@PathVariable Long id) {
-        return bookingService.validateBooking(id);
-    }
-
     @GetMapping("{id}")
     public Booking getBooking(@PathVariable Long id) {
         return bookingService.getOne(id);

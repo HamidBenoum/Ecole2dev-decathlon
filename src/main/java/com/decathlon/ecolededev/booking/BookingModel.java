@@ -31,15 +31,4 @@ public class BookingModel {
     @Column(name="endBooking")
     private LocalDateTime end;
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
-
-    public static enum Status{
-        WAITING,
-        VALIDATE,
-        CONFLICT,
-        CANCELED,
-        MAINTENANCE
-    }
-
 }
