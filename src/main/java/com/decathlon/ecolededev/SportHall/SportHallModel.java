@@ -18,10 +18,6 @@ public class SportHallModel {
     @GeneratedValue
     private Long id;
 
-    private String description;
-
-    private String telephoneNumber;
-
     private String name;
 
 }

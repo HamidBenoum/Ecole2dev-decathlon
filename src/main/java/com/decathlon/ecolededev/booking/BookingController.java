@@ -37,10 +37,6 @@ public class BookingController {
 
         return bookingService.getByStatus(value);
     }
-    @PatchMapping("{id}/cancel")
-    public Booking cancel(@PathVariable Long id){
-        return bookingService.cancelBooking(id);
-    }
 
     @PatchMapping("{id}/validate")
     public Booking validateBooking(@PathVariable Long id) {

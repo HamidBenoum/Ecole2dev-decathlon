@@ -57,36 +57,6 @@ public class BookingService {
         return mapBookingModelToBooking(model);
     }
 
-    public Booking addBookingForMaintenance(Long idSportHall, Slot slot) throws IncorrectSlotException {
-        //on verifie si le slot est correcte
-        if (!slotService.isCorrectSlot(slot)) {
-            throw new IncorrectSlotException(slot);
-        }
-
-        Booking booking = Booking.builder()
-                .idSportHall(idSportHall)
-                .start(slot.getStart())
-                .end(slot.getEnd())
-                .status(BookingModel.Status.MAINTENANCE)
-                .build();
-
-        BookingModel bookingModel = mapBookingToBookingModel(booking);
-
-        //on recupére la liste des reservations sur ce créneau pour les cancels
-        //on recupere la liste des slots dont la date est supérieur à celle de départ
-        List<BookingModel> betweenStartAndEndDate = bookingRepository.findBetweenStartAndEndDate(booking.getStart(),
-                booking.getEnd(), booking.getIdSportHall());
-
-        for (BookingModel current : betweenStartAndEndDate) {
-            current.setStatus(BookingModel.Status.CANCELED);
-            bookingRepository.save(current);
-        }
-
-        //on sauvegarde
-        bookingRepository.save(bookingModel);
-        return mapBookingModelToBooking(bookingModel);
-    }
-
     public Booking cancelBooking(Long id) {
         BookingModel one = bookingRepository.getOne(id);
         one.setStatus(BookingModel.Status.CANCELED);
