@@ -103,4 +103,5 @@ La méthodologie Test Driven Development consiste à
 
 En procédant test par test, vous serez sur que votre code fonctionne, et de ne pas avoir écrit plus de code que nécéssaire.
 
-> Utilisez les méthodes LocalDateTime#isAfter et LocalDateTime#isBefore
+> Utilisez les méthodes LocalDateTime#isAfter et LocalDateTime#isBefore pour comparer les dates
+
