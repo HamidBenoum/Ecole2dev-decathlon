@@ -1,6 +1,5 @@
 package com.decathlon.ecolededev.client;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +19,6 @@ public class ClientController {
         return clientService.create(client);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("{id}")
     public Client getById(@PathVariable Long id) {
        return clientService.getOne(id);

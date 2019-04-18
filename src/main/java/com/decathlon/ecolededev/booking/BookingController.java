@@ -3,12 +3,10 @@ package com.decathlon.ecolededev.booking;
 
 import com.decathlon.ecolededev.exceptions.IncorrectSlotException;
 import com.decathlon.ecolededev.exceptions.NotAvailableSlotException;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@PreAuthorize("hasRole('ADMIN')")
 @RestController
 @RequestMapping("/bookings/")
 public class BookingController {

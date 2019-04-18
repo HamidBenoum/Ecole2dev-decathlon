@@ -1,7 +1,6 @@
 package com.decathlon.ecolededev.SportHall;
 
 import com.decathlon.ecolededev.httpstatus.NotFoundException;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +17,6 @@ public class SportHallController {
         this.sportHallService = sportHallService;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public SportHall createSportHall(@RequestBody SportHall sportHall) {
 

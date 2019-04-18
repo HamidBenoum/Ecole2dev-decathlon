@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -36,14 +35,12 @@ public class ClientControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     public void getClient_should_return_http_200_when_client_is_found() throws Exception {
         mvc.perform(get("/client/1"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     public void getClient_should_return_http_400_when_client_is_not_found() throws Exception {
         mvc.perform(get("/client/2"))
                 .andExpect(status().isNotFound());
