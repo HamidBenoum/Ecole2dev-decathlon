@@ -5,12 +5,9 @@ import com.decathlon.ecolededev.booking.BookingService;
 import com.decathlon.ecolededev.exceptions.IncorrectSlotException;
 import com.decathlon.ecolededev.slot.Slot;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import javax.persistence.EntityNotFoundException;
-import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -41,10 +38,6 @@ public class SportHallService {
         return sportHallRespository.findAll()
                 .stream()
                 .map(model -> mapSportHallModelToSportHall(model))
-                .map(sportHall -> {
-                    sportHall.setPrice(getPrice(sportHall.getId()));
-                    return sportHall;
-                })
                 .collect(Collectors.toList());
     }
 
@@ -57,19 +50,6 @@ public class SportHallService {
             log.info("SportHall not found for the id {id}", id);
             return Optional.empty();
         }
-    }
-
-    public int getPrice(Long id) {
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Integer> response;
-        try {
-            URI uri = new URI("http://localhost:8081/price/" + id);
-            response = restTemplate.getForEntity(uri, Integer.class);
-        } catch (Exception e) {
-            log.error("erreur lors de la récupération du prix");
-            return 0;
-        }
-        return response.getBody();
     }
 
     public Booking close(Long id, LocalDateTime start, LocalDateTime end) throws IncorrectSlotException {

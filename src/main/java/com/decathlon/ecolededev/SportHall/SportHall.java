@@ -9,7 +9,6 @@ public class SportHall {
 
     private Long id;
     private String name;
-    private Integer price;
     private String description;
     private String telephoneNumber;
 }
