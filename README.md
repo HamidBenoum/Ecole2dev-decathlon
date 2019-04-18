@@ -1,91 +1,106 @@
-# Lot 3
+# Lot 4
 
-Votre client souhaite que vos API respectent certaines bonnes pratiques. 
+L'objectif de ce lot et d'implémenter plusieurs règles de gestion.
 
-Pour le moment, quand une ressource n’est pas trouvé, votre application renvoie une erreur `500` au lieu d’une erreur `404`.
+* Un client peut émettre un souhait de réservation pour une salle. Dans ce cas, la réservation à un status : EN_ATTENTE_DE_VALIDATION.
 
->Assurez vous que vous renvoyez bien une erreur 404 lorsque une entité n’est pas trouvé. 
+> Utilisez un Enum dans votre model pour gérer les status
 
----
+* Un admin peut récupérer la liste des réservations qui sont dans le status : EN_ATTENTE_DE_VALIDATION
 
-## Step 1
+> Votre api aura comme chemin : /booking/status/{status}
+ 
+* Un admin peut valider un souhait. Dans ce cas la réservation passe en status : VALIDE
 
-Vous pouvez rajouter dans votre controller le paramètre `HttpServletResponse`. Vous aurez ainsi la possible de manipuler la réponse http.
+> Votre api aura comme chemin : /booking/{id}/validate
+
+* Si un client émet un souhait de réservation pour une salle qui n’est plus disponible, le souhait de réservation est enregistré avec le status CONFLIT, et l’api renvoie un code http 409
+
+--- 
+
+La dernière règle de gestion est plus compliqué à implémenter. En effet vous devez :
+
+* Récupérer la liste des réservations futur à la date de réservation souhaité pour une salle de sport
+
+> Pour cela vous allez devoir créer une requête dans votre classe BookingRepository 
 
 ```java
-@GetMapping("{id}")
-public Client getById(@PathVariable Long id, HttpServletResponse response) {
-   Client client=null;
-   try{
-       client = clientService.getOne(id);
-   }catch (EntityNotFoundException e){
-       response.setStatus(HttpStatus.NOT_FOUND.value());
-   }
-   return client;
+    @Query("select b from BookingModel b where ..."
+    List<BookingModel> findByStartingDate(LocalDateTime startingDate,Long id);
+```
+
+* Vérifier si il n'y a pas de conflit
+
+* Si il n'y a pas de conflit sauvegarder la réservation, sinon la sauvergarder avec un status CONFLIT et renvoyer une erreur 409 (utilisez ce que l'on a vu précédément avec les exceptions)
+
+Pour vérifier si une salle est disponible sur un slot (date de début, date de fin), implémentez l'interface suivante :
+
+```java
+public interface SlotService {
+
+    /**
+     * This method take a slot and a list of slot and return true if the slot is available
+     *
+     * @param slotList
+     * @param slot
+     * @return true if the slot is available
+     */
+    boolean isAvailable(List<Slot> slotList, Slot slot);
+
+    /**
+     * This method will check if the slot is correct
+     * A correct slot have a @Slot.start > @Slot.end
+     *
+     * @param slot
+     * @return
+     */
+    boolean isCorrectSlot(Slot slot);
+
 }
 ```
 
-> Essayez cette solution
-
-## Step 2
-
-Une solution plus élégante est de créer un `ControllerAdvice` qui réagit à des exceptions (dans notre cas on remarque que hibernate nous lève une exception de type `EntityNotFoundException` . Exemple :
+Voici la classe Slot :
 
 ```java
-@ControllerAdvice
-public class HandleException {
+@Data
+@Builder
+public class Slot {
 
-   @ExceptionHandler(EntityNotFoundException.class)
-   public ResponseEntity notFound(EntityNotFoundException enfe){
+    String id;
 
-       return new ResponseEntity<>(enfe.getMessage(),HttpStatus.NOT_FOUND);
-   }
+    /**
+     * The beggining of the booking
+     */
+    LocalDateTime start;
+
+    /**
+     * The end of the booking
+     */
+    LocalDateTime end;
 }
 ```
 
-> Quels sont les avantages de la solution 2 ?
+Je vous propose de procéder en écrivant d'abord vos tests avant l'implémentation.
 
-## Step 3
+Voici la liste des cas à tester :
 
-Ecrirez un test d’intégration pour vérifier que cela fonctionne
+* slot_isNotAvailable_when_inside_a_slot
+* slot_isNotAvailable_when_start_inside_a_slot
+* slot_isNotAvailable_when_end_inside_a_slot
+* slot_isNotAvailable_when_slot_start_before_and_end_after
+* slot_isNotAvailable_when_already_exist
+* slot_isAvailable_when_before_a_slot
+* slot_isAvailable_when_after_a_slot
+* slot_isAvailable_when_start_when_a_slot_end
+* slot_isAvailable_when_end_when_a_slot_start
+* incorrect_slot_start_before_end
 
-Dans notre test, nous souhaitons vérifier que lorsqu’une ressource est trouvé,l’API nous renvoie un code http 200, et lorsque c’est non trouvé, l’application nous renvoie un code http 404.
+La méthodologie Test Driven Development consiste à
+* écrire votre test
+* vérifier si il échoue
+* écrire l'implémentation
+* vérifier qu'il passe
 
-Nous allons mocker notre service, car nous ne voulons pas le tester, et lui paramètrer des comportements dans la méthode précédé de l’annotation `@Before`
+En procédant test par test, vous serez sur que votre code fonctionne, et de ne pas avoir écrit plus de code que nécéssaire.
 
-```java
-@RunWith(SpringRunner.class)
-@WebMvcTest(ClientController.class)
-public class ClientControllerTest {
-
-   @Autowired
-   private MockMvc mvc;
-
-   @MockBean
-   private ClientService clientService;
-
-
-   @Before
-   public void setup() throws Exception {
-       //client trouvé
-       when(clientService.getOne(1L)).thenReturn(new Client());
-       //client non trouvé
-       when(clientService.getOne(2L)).thenThrow(new EntityNotFoundException());
-   }
-
-   @Test
-   public void getClient_should_return_http_200_when_client_is_found() throws Exception {
-       mvc.perform(get("/VOTRE_URL"))
-               .andExpect(status().isOk());
-   }
-
-   @Test
-   public void getClient_should_return_http_400_when_client_is_not_found() throws Exception {
-       mvc.perform(get("/VOTRE_URL"))
-               .andExpect(status().isNotFound());
-   }
-  
-}
-```
-
-> Créez des tests d'intégrations pour la recherche de client, de sporthall et de booking
+> Utilisez les méthodes LocalDateTime#isAfter et LocalDateTime#isBefore
