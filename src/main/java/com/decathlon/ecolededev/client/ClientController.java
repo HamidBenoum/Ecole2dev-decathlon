@@ -1,5 +1,6 @@
 package com.decathlon.ecolededev.client;
 
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
