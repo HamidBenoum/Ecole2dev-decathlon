@@ -15,16 +15,4 @@ public class HandleException {
 
         return new ResponseEntity<>(enfe.getMessage(),HttpStatus.NOT_FOUND);
     }
-
-    @ExceptionHandler(IncorrectSlotException.class)
-    public ResponseEntity incorrect(EntityNotFoundException enfe){
-
-        return new ResponseEntity<>(enfe.getMessage(),HttpStatus.NOT_ACCEPTABLE);
-    }
-
-    @ExceptionHandler(NotAvailableSlotException.class)
-    public ResponseEntity conflict(NotAvailableSlotException enfe){
-
-        return new ResponseEntity<>(enfe.getMessage(),HttpStatus.CONFLICT);
-    }
 }
