@@ -36,13 +36,13 @@ public class ClientControllerTest {
 
     @Test
     public void getClient_should_return_http_200_when_client_is_found() throws Exception {
-        mvc.perform(get("/client/1"))
+        mvc.perform(get("/clients/1"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void getClient_should_return_http_400_when_client_is_not_found() throws Exception {
-        mvc.perform(get("/client/2"))
+        mvc.perform(get("/clients/2"))
                 .andExpect(status().isNotFound());
     }
 
