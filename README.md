@@ -28,9 +28,10 @@ L’objectif de ce TP est de mettre en pratique les concepts vu précédemment (
 
 ## Travail à réaliser 
 
-La start up "Ecole2Dev" a gagné une appel d'offre public de la ville de Lille, visant à réaliser un logiciel permettant à la ville de mettre à disposition un système de réservation de leurs infrastructures sportives (salle de sport, terrain de sport, ... ) pour les associations, les écoles ainsi que pour des organismes privée souhaitant organiser un événement sportif (par exemple une entreprise souhaitant organiser un tournoi de basket).
+La start up *Ecole2Dev* a gagné une appel d'offre public de la ville de Lille, visant à réaliser un logiciel permettant à la ville de mettre à disposition **un système de réservation de leurs infrastructures sportives** (salle de sport, terrain de sport, ... ) pour les associations, les écoles ainsi que pour des organismes privée souhaitant organiser un événement sportif (par exemple une entreprise souhaitant organiser un tournoi de basket).
 
 Actuellement les associations et les écoles réservent une année à l'avance des créneaux auprès de la Mairie. La gestion des créneaux se fait de manière manuelle,les associations et écoles envoient des courrier à la Mairie qui met dans un fichier excel les réservations. 
+
 Quand un organisme privé souhaite réserver un terrain, le service des sports vérifie si le créneau est libre. 
 Les associations et les écoles ne payent pas pour les réservations, mais les organismes privés reçoivent une facture qu'ils doivent ensuite payer.
 
