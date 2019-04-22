@@ -1,4 +1,4 @@
-# Lot 2
+# Lot 3
 
 Implémentez les API qui permettent de gérer les réservations de salles :
 * Création 
