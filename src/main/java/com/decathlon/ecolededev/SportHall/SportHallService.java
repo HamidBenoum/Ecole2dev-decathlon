@@ -36,14 +36,9 @@ public class SportHallService {
     }
 
 
-    public Optional<SportHall> getOne(Long id) {
-        try {
-            return Optional.of(sportHallRespository.getOne(id))
-                    .map(m -> mapSportHallModelToSportHall(m));
-        } catch (EntityNotFoundException e) {
-            log.info("SportHall not found for the id {id}", id);
-            return Optional.empty();
-        }
+    public SportHall getOne(Long id) {
+
+        return mapSportHallModelToSportHall(sportHallRespository.getOne(id));
     }
 
     private SportHallModel mapSportHallToSportHallModel(SportHall sportHall) {
