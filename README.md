@@ -2,10 +2,10 @@
 
 Decathlon souhaite un TP sur mesure permettant de mettre en pratique le contenu des formations java, java 8, sql, spring boot.
 
-Nous proposons donc un TP permettant de mettre en oeuvre :
+Nous proposons donc un TP permettant de :
 
-* La création d'une application from scratch
-* Connexion à une base de donnée (postgresql)
+* Créer une application from scratch
+* Se connecter à une base de donnée (postgresql)
 * Exposer des API
 * Créer des pages html
 * Implémenter des règles de gestion
@@ -19,7 +19,7 @@ Nous proposons donc un TP permettant de mettre en oeuvre :
 
 Un IDE (IntelliJ, Eclipse … )
 Java 8
-PostgreSQL + Votre outils favoris pour vous connecter à la base ( PGAdmin, DBeaver … )
+PostgreSQL + Votre outil favoris pour vous connecter à la base ( PGAdmin, DBeaver … )
 Maven
 
 ## Objectif :
@@ -28,9 +28,9 @@ L’objectif de ce TP est de mettre en pratique les concepts vu précédemment (
 
 ## Travail à réaliser 
 
-La start up *Ecole2Dev* a gagné une appel d'offre public de la ville de Lille, visant à réaliser un logiciel permettant à la ville de mettre à disposition **un système de réservation de leurs infrastructures sportives** (salle de sport, terrain de sport, ... ) pour les associations, les écoles ainsi que pour des organismes privée souhaitant organiser un événement sportif (par exemple une entreprise souhaitant organiser un tournoi de basket).
+La start up *Ecole2Dev* a gagné un appel d'offre public de la ville de Lille, visant à réaliser un logiciel permettant de mettre à disposition **un système de réservation de leurs infrastructures sportives** (salle de sport, terrain de sport, ... ) pour les associations, les écoles ainsi que pour des organismes privés souhaitant organiser un événement sportif (par exemple une entreprise souhaitant organiser un tournoi de basket).
 
-Actuellement les associations et les écoles réservent une année à l'avance des créneaux auprès de la Mairie. La gestion des créneaux se fait de manière manuelle,les associations et écoles envoient des courrier à la Mairie qui met dans un fichier excel les réservations. 
+Actuellement les associations et les écoles réservent, une année à l'avance, des créneaux auprès de la Mairie. La gestion des créneaux se fait de manière manuelle, les associations et écoles envoient des courriers à la Mairie, qui met dans un fichier excel les réservations. 
 
 Quand un organisme privé souhaite réserver un terrain, le service des sports vérifie si le créneau est libre. 
 Les associations et les écoles ne payent pas pour les réservations, mais les organismes privés reçoivent une facture qu'ils doivent ensuite payer.
@@ -38,7 +38,7 @@ Les associations et les écoles ne payent pas pour les réservations, mais les o
 
 ## Organisation :
 
-1. Présentation du lot aux stagiaires
+1. Présentation du lot 
 2. Planning poker
 3. Réalisation
 4. Présentation des solutions
