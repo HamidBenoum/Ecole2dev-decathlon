@@ -13,7 +13,7 @@ Voici la liste des API à implémenter :
 | GET      | /clients/      |   Retourne la liste des clients |
 | GET | /clients/{id}      |    Retourne un client |
 | DELETE | /clients/{id}      |    Supprime un client |
-| PATCH | /clients/{id}      |    Met à jour un client |
+| PATCH | /clients/     |    Met à jour un client |
 | POST | /sporthalls/     |    Créé une salle de sport |
 | GET | /sporthalls/     |    Retourne la liste des salles de sports |
 | GET | /sporthalls/{id}    |    Retourne une salle de sport |
