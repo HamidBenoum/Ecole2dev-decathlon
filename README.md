@@ -26,7 +26,7 @@ public class ClientVueController {
 
     @GetMapping("list")
     public String listClient(){
-        return "client";
+        return "client"; // nom du fichier html sans l'extension .html
     }
 }
 
