@@ -183,7 +183,7 @@ Pour finir, créez la méthode permettant de supprimer un client et de rediriger
         <td>Nom</td>
     </thead>
     <tr th:each ="client : ${clients}">
-        <th><a th:href="'delete/'+{client.id">delete</a></th>
+        <th><a th:href="'delete/'+${client.id}">delete</a></th>
         <td th:text="${client.id}"></td>
         <td th:text="${client.name}"></td>
     </tr>
