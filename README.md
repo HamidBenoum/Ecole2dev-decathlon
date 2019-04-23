@@ -108,6 +108,7 @@ Pour finir, vous avez besoin de représenter votre base de données à travers u
 
 ```java
 
+@Entity
 @Table(name = "client")
 public class ClientModel {
 
