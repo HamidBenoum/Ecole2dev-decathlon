@@ -11,7 +11,7 @@ Voici la liste des API à implémenter :
 | ------------- |:-------------:| -----:|
 | POST     | /bookings/ | Créé une réservation |
 | GET      | /bookings/      |   Retourne la liste des réservations |
-| GET | /booking/{id}      |    Retourne une réservation |
+| GET | /bookings/{id}      |    Retourne une réservation |
 
 L'utilisateur de l'API connait l'id du client et de la salle de sport. Pour créer une réservation il passe dans le body de la request le document json suivant :
 
