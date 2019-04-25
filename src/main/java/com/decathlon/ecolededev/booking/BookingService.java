@@ -44,12 +44,12 @@ public class BookingService {
 
         //on verifie si on a un conflict
         if (!slotService.isAvailable(getSlotsFromBookings(byStartingDate), slot)) {
-            bookingModel.setStatus(BookingModel.Status.CONFLICT);
+            bookingModel.setStatus(Status.CONFLICT);
             bookingRepository.saveAndFlush(bookingModel);
             throw new NotAvailableSlotException(slot);
         }
 
-        bookingModel.setStatus(BookingModel.Status.WAITING);
+        bookingModel.setStatus(Status.WAITING);
 
         //tout va bien on sauvegarde
         BookingModel model = bookingRepository.saveAndFlush(bookingModel);
@@ -59,7 +59,7 @@ public class BookingService {
 
     public Booking cancelBooking(Long id) {
         BookingModel one = bookingRepository.getOne(id);
-        one.setStatus(BookingModel.Status.CANCELED);
+        one.setStatus(Status.CANCELED);
         bookingRepository.save(one);
         return mapBookingModelToBooking(one);
     }
@@ -75,7 +75,7 @@ public class BookingService {
                 .collect(Collectors.toList());
     }
 
-    public List<Booking> getByStatus(BookingModel.Status status) {
+    public List<Booking> getByStatus(Status status) {
         return bookingRepository.findByStatus(status)
                 .stream()
                 .map(b -> mapBookingModelToBooking(b))
@@ -84,7 +84,7 @@ public class BookingService {
 
     public Booking validateBooking(Long id) {
         BookingModel one = bookingRepository.getOne(id);
-        one.setStatus(BookingModel.Status.VALIDATE);
+        one.setStatus(Status.VALIDATE);
         bookingRepository.save(one);
         return mapBookingModelToBooking(one);
     }

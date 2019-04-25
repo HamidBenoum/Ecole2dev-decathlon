@@ -31,7 +31,7 @@ public class BookingController {
     @GetMapping("/status/{status}")
     public List<Booking> getNotValidate(@PathVariable String status) {
 
-        BookingModel.Status value = BookingModel.Status.valueOf(status);
+        Status value = Status.valueOf(status);
 
         return bookingService.getByStatus(value);
     }

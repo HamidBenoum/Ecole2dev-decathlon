@@ -14,6 +14,6 @@ public class Booking {
     private Long idClient;
     private LocalDateTime start;
     private LocalDateTime end;
-    private BookingModel.Status status;
+    private Status status;
 
 }

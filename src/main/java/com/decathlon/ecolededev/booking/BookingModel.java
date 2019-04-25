@@ -34,12 +34,4 @@ public class BookingModel {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    public static enum Status{
-        WAITING,
-        VALIDATE,
-        CONFLICT,
-        CANCELED,
-        MAINTENANCE
-    }
-
 }

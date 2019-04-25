@@ -16,6 +16,6 @@ public interface BookingRepository extends JpaRepository<BookingModel,Long> {
             "and b.status in ('WAITING','VALIDATE') ")
     List<BookingModel> findByStartingDate(LocalDateTime startingDate,Long id);
 
-    List<BookingModel> findByStatus(BookingModel.Status status);
+    List<BookingModel> findByStatus(Status status);
 
 }
